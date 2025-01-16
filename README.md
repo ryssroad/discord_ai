@@ -70,6 +70,13 @@
                     "password": "password",
                     "protocol": "http"
                 }
+            },
+            {
+                "token": "...",
+                "headers": {
+                    "..."
+                }
+                // Remove proxy = {} if proxies are not needed for this account.
             }
             // Add more accounts as needed
         ]
