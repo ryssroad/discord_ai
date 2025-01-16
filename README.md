@@ -112,5 +112,4 @@ MIT License. See [LICENSE](LICENSE) for details.
 
 Telegram: [@enbanned](https://t.me/enbanned)
 
----
-**Note:** Use this bot responsibly and ensure compliance with Discord's Terms of Service. Do not share your Discord tokens or API keys publicly.
+
