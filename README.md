@@ -37,7 +37,7 @@
     interval_time_to = 240   # Maximum time between messages (seconds)
     ```
 
-2. **Set up `accounts.json`:**
+2. **Set up `accounts.json` (Remove proxy = {} if proxies are not needed for this account.):**
     ```json
     {
         "accounts": [
@@ -76,9 +76,9 @@
                 "headers": {
                     "..."
                 }
-                // Remove proxy = {} if proxies are not needed for this account.
+
             }
-            // Add more accounts as needed
+
         ]
     }
     ```
