@@ -12,7 +12,7 @@ heartbeat = DiscordHeartbeat(
 
 остальные настройки те же самые
 
-# Discord AI Spammer
+# Discord AI Spammer WITHOUT REPLYS
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
