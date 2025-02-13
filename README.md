@@ -1,3 +1,15 @@
+## NOTE FROM ROAD
+настройка интервала между сообщениями:
+
+файл app/discord_heartbeat.py
+```python
+heartbeat = DiscordHeartbeat(
+            account=account,
+            ai_handler=ai_handler,
+            heartbeat_interval=(300, 600)  # Настройте интервал по вашему усмотрению 300 == 5 минут
+        )
+```
+
 # Discord AI Spammer
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
