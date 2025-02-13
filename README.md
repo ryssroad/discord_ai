@@ -10,6 +10,8 @@ heartbeat = DiscordHeartbeat(
         )
 ```
 
+остальные настройки те же самые
+
 # Discord AI Spammer
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
