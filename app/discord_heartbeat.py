@@ -75,29 +75,53 @@ class DiscordHeartbeat:
             logger.error(f"[{self.account.user_id}] Error while sending message: {e}")
             return None
 
+    def get_channel_messages(self, limit: int = 20) -> List[dict]:
+        """Получаем последние сообщения из канала для контекста"""
+        url = f"{self.BASE_URL}/channels/{self.account.channel_id}/messages"
+        params = {"limit": limit}
+        try:
+            resp = requests.get(url, headers=self.headers, params=params, timeout=10, proxies=self.proxies)
+            resp.raise_for_status()
+            return resp.json()
+        except Exception as e:
+            logger.error(f"[{self.account.user_id}] Error getting channel messages: {e}")
+            return []
+
+    async def generate_message_with_context(self) -> str:
+        """Генерируем сообщение с учетом контекста канала"""
+        # Получаем последние сообщения
+        channel_messages = self.get_channel_messages(limit=20)
+        
+        # Извлекаем только текст сообщений для контекста
+        channel_context = [msg['content'] for msg in channel_messages]
+        
+        # Генерируем сообщение через AI с учетом контекста
+        message = await self.ai_handler.generate_response(
+            personal_history=[],
+            channel_context=channel_context,
+            current_message="",
+            is_reply=False
+        )
+        
+        return message
+
     async def start_heartbeat(self):
         logger.info(f"[{self.account.user_id}] Starting heartbeat messages")
         while True:
             try:
-                # Генерируем новое сообщение через AI
-                message = await self.ai_handler.generate_response(
-                    personal_history=[],
-                    channel_context=[],
-                    current_message="",
-                    is_reply=False
-                )
-
+                # Используем новый метод генерации с контекстом
+                message = await self.generate_message_with_context()
+                
                 # Отправляем сообщение
                 await self.send_message(message)
                 
-                # Ждем случайное время перед следующим сообщением
                 delay = random.uniform(*self.heartbeat_interval)
                 logger.debug(f"Waiting {delay:.1f} seconds before next heartbeat message")
                 await asyncio.sleep(delay)
 
             except Exception as e:
                 logger.error(f"[{self.account.user_id}] Error in heartbeat loop: {e}")
-                await asyncio.sleep(30)  # Ждем 30 секунд перед повторной попыткой
+                await asyncio.sleep(30)
 
 # Пример использования:
 async def main():
